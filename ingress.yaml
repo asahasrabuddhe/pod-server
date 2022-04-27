@@ -13,3 +13,17 @@ spec:
                 name: example-server
                 port:
                   number: 8080
+          - pathType: Prefix
+            path: "/quartz"
+            backend:
+              service:
+                name: server-quartz
+                port:
+                  number: 8080
+          - pathType: Prefix
+            path: "/jade"
+            backend:
+              service:
+                name: server-jade
+                port:
+                  number: 8080
