@@ -33,7 +33,7 @@ type PodServerHandler struct {
 }
 
 func (p *PodServerHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	host := r.Host
+	host := r.Header.Get("Origin")
 
 	response := map[string]string{
 		"message":        fmt.Sprintf("%s got a request from %s", p.name, host),
