@@ -27,10 +27,10 @@ spec:
     metadata:
       labels:
         app: server-jade
-        version: "v2"
+        version: "v4"
     spec:
       containers:
-        - image: ajitemsahasrabuddhe/pod-server:v2
+        - image: ajitemsahasrabuddhe/pod-server:v4
           name: server-jade
           ports:
             - containerPort: 8080

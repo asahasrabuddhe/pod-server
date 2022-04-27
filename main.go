@@ -51,14 +51,22 @@ func (p *PodServerHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			queryMethod = http.MethodGet
 		}
 		req, err := http.NewRequest(queryMethod, queryUrl, nil)
-		if err == nil {
+		if err != nil {
+			response["error"] = err.Error()
+		} else {
 			res, err := http.DefaultClient.Do(req)
-			if err == nil {
+			if err != nil {
+				response["error"] = err.Error()
+			} else {
 				response["query_status"] = fmt.Sprintf("%d - %s", res.StatusCode, res.Status)
-				body, _ := io.ReadAll(res.Body)
-				response["query_response"] = string(body)
+				body, err := io.ReadAll(res.Body)
+				if err != nil {
+					response["error"] = err.Error()
+				} else {
+					response["query_response"] = string(body)
+					_ = res.Body.Close()
+				}
 			}
-			_ = res.Body.Close()
 		}
 	}
 
