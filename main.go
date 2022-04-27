@@ -54,6 +54,7 @@ func (p *PodServerHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			response["error"] = err.Error()
 		} else {
+			req.Header.Set("Origin", p.name)
 			res, err := http.DefaultClient.Do(req)
 			if err != nil {
 				response["error"] = err.Error()

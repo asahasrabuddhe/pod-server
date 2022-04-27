@@ -27,10 +27,10 @@ spec:
     metadata:
       labels:
         app: server-quartz
-        version: "v6"
+        version: "v7"
     spec:
       containers:
-        - image: ajitemsahasrabuddhe/pod-server:v6
+        - image: ajitemsahasrabuddhe/pod-server:v7
           name: server-quartz
           ports:
             - containerPort: 8080
