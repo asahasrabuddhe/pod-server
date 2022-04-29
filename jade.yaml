@@ -22,11 +22,12 @@ spec:
   replicas: 5
   selector:
     matchLabels:
-      app: server-jade
+      pod: server-jade
   template:
     metadata:
       labels:
         app: server-jade
+        pod: server-jade
         version: "v7"
     spec:
       containers:
@@ -37,3 +38,36 @@ spec:
           env:
             - name: NAME
               value: jade
+            - name: POD_UID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: CONFIG_PROPERTY
+              valueFrom:
+                configMapKeyRef:
+                  key: property
+                  name: jade-config
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: jade-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jade-config
+data:
+  property: new_example
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: jade-secret
+data:
+  username: cGFzc3dvcmQK
